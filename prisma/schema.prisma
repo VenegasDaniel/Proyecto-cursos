@@ -17,30 +17,37 @@ model Curso {
   valoracion           Float
   cantidadInscritos    Int
   banner               String
-  unidades             Unidad[]
-  comentarios          Comentario[]
+  unidades             Unidad[]     // Relación uno a muchos con Unidad
+  comentarios          Comentario[] // Relación uno a muchos con Comentario
 }
 
-type Unidad {
-  numeroOrden  Int
-  nombreUnidad String
-  clases       Clase[]
+model Unidad {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  numeroOrden   Int
+  nombreUnidad  String
+  cursoId       String  // Foreign key al Curso
+  curso         Curso   @relation(fields: [cursoId], references: [id])
+  clases        Clase[] // Relación uno a muchos con Clase
 }
 
-type Clase {
-  numeroOrden      Int
+model Comentario {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  autor      String
+  titulo     String
+  detalle    String
+  meGusta    Int
+  noMeGusta  Int
+  cursoId    String  // Foreign key al Curso
+  curso      Curso   @relation(fields: [cursoId], references: [id])
+}
+
+model Clase {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
   nombreClase      String
+  numeroOrden      Int
   descripcionClase String
   videoUrl         String
   materiales       String[]
-  comentarios      Comentario[]
-}
-
-type Comentario {
-  autor     String
-  fecha     DateTime @default(now())
-  titulo    String
-  detalle   String
-  meGusta   Int
-  noMeGusta Int
+  unidadId         String   // Foreign key a la Unidad
+  unidad           Unidad   @relation(fields: [unidadId], references: [id])
 }
