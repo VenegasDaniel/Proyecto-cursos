@@ -1,0 +1,46 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Curso {
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  nombre               String
+  descripcionBreve     String
+  descripcionDetallada String
+  imagen               String
+  valoracion           Float
+  cantidadInscritos    Int
+  banner               String
+  unidades             Unidad[]
+  comentarios          Comentario[]
+}
+
+type Unidad {
+  numeroOrden  Int
+  nombreUnidad String
+  clases       Clase[]
+}
+
+type Clase {
+  numeroOrden      Int
+  nombreClase      String
+  descripcionClase String
+  videoUrl         String
+  materiales       String[]
+  comentarios      Comentario[]
+}
+
+type Comentario {
+  autor     String
+  fecha     DateTime @default(now())
+  titulo    String
+  detalle   String
+  meGusta   Int
+  noMeGusta Int
+}
