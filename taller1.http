@@ -1,0 +1,52 @@
+Conexión a la base de datos de mongodb Atlas
+DATABASE_URL="mongodb+srv://joaquin:admin@tallerunonosql.26ila.mongodb.net/talleruno?retryWrites=true&w=majority"
+
+Ruta para la vista principal
+
+@Get
+1. Listar todos los cursos disponibles
+@List_cursos = http://localhost:3000/cursos
+
+2. Mostrar el detalle de un curso específico por su ID
+@Curso_detalle = http://localhost:3000/cursos/6715dd4963ab0663a33ee54e
+
+3. Acceder a los contenidos de un curso (unidades y clases)
+@Curso_contenido = http://localhost:3000/cursos/6715dd4963ab0663a33ee54e/contenido
+
+4. Obtener los comentarios más valorados de un curso (con paginación)
+@Curso_comentarios = http://localhost:3000/cursos/6715dd4963ab0663a33ee54e/comentarios
+
+5. Obtener el video de una clase en específico
+@Clase_video = http://localhost:3000/clases/6715dd4963ab0663a33ee550/video
+
+6.- Obtener los materiales de una clase
+@Clase_materiales = http://localhost:3000/clases/6715dd4963ab0663a33ee550/materiales
+
+Crear un nuevo curso
+
+@Post
+@Crear_cursos = http://localhost:3000/cursos
+
+{
+  "nombreCurso": "Curso de Programación Básica",
+  "descripcionCurso": "Este curso cubre los fundamentos de la programación.",
+  "duracion": "4 semanas",
+  "unidades": [
+    {
+      "numeroOrden": 1,
+      "nombreUnidad": "Introducción a la programación",
+      "clases": [
+        {
+          "numeroOrden": 1,
+          "nombreClase": "Conceptos básicos",
+          "descripcionClase": "Esta clase cubre conceptos como variables y tipos de datos.",
+          "videoUrl": "https://example.com/video1",
+          "materiales": [
+            "https://example.com/material1",
+            "https://example.com/material2"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import { CursosService } from './cursos.service';
 export class CursosController {
     constructor(private readonly cursosService: CursosService) {}
 
-      // 1. Listar todos los cursos disponibles
+    // 1. Listar todos los cursos disponibles
     @Get()
     async getCursos() {
         return this.cursosService.getCursos();
@@ -18,7 +18,7 @@ export class CursosController {
     }
 
     // 3. Acceder a los contenidos de un curso (unidades y clases)
-    @Get(':id/unidades')
+    @Get(':id/contenido')
     async getUnidadesByCurso(@Param('id') id: string) {
         return this.cursosService.getUnidadesByCurso(id);
     }
@@ -38,24 +38,25 @@ export class CursosController {
     ) {
         return this.cursosService.getComentariosByCurso(id, page, limit);
     }
+}
 
-    // 6. Acceder al video de una clase por ID del curso y el número de clase
-    @Get(':id/unidades/:unidadId/clases/:claseId')
-    async getClaseVideo(
-        @Param('id') id: string,
-        @Param('unidadId') unidadId: string,
-        @Param('claseId') claseId: string,
-    ) {
-        return this.cursosService.getClaseVideo(id, unidadId, claseId);
-    }
+// Nueva ruta para acceder directamente a las clases y su contenido
+@Controller('clases')
+export class ClasesController {
+    constructor(private readonly cursosService: CursosService) {}
 
-    // 7. Descargar materiales de una clase
-    @Get(':id/unidades/:unidadId/clases/:claseId/materiales')
-    async getClaseMateriales(
-        @Param('id') id: string,
-        @Param('unidadId') unidadId: string,
+    // 6. Acceder al contenido de una clase (video o materiales)
+    @Get(':claseId/contenido')
+    async getClaseContenido(
         @Param('claseId') claseId: string,
+        @Query('tipo') tipo: 'video' | 'materiales',
     ) {
-        return this.cursosService.getClaseMateriales(id, unidadId, claseId);
+        if (tipo === 'video') {
+            return this.cursosService.getClaseVideo(claseId);
+        } else if (tipo === 'materiales') {
+            return this.cursosService.getClaseMateriales(claseId);
+        } else {
+            return { error: 'Tipo de contenido no válido' };
+        }
     }
 }

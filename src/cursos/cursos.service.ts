@@ -73,75 +73,39 @@ export class CursosService {
             return comentariosPaginados;
     }
 
-    // 6. Obtener el video de una clase específica de una unidad
-    async getClaseVideo(id: string, unidadId: string, claseId: string) {
-        // Obtener el curso con sus unidades y clases
-        const curso = await this.prisma.curso.findUnique({
-          where: { id },
-          select: {
-            unidades: {
-              select: {
-                id: true,
-                numeroOrden: true,
-                nombreUnidad: true,
-                clases: {  // Incluyendo las clases asociadas con cada unidad
-                  select: {
-                    numeroOrden: true,
-                    nombreClase: true,
-                    descripcionClase: true,
-                    videoUrl: true,
-                    materiales: true,
-                  },
-                },
-              },
-            },
-          },
-        });
-      
-        // Buscar la unidad por su id
-        const unidad = curso?.unidades.find(u => u.id === unidadId);
-        if (!unidad) {
-          throw new Error('Unidad no encontrada');
-        }
-      
-        // Buscar la clase específica por su id
-        const clase = unidad?.clases.find(c => c.numeroOrden === parseInt(claseId));
-        if (!clase) {
-          throw new Error('Clase no encontrada');
-        }
-      
-        return { videoUrl: clase.videoUrl, descripcionClase: clase.descripcionClase };
-      }
-  // 7. Obtener los materiales adjuntos de una clase
-    async getClaseMateriales(id: string, unidadId: string, claseId: string) {
-        // Obtener el curso con sus unidades y clases
-        const curso = await this.prisma.curso.findUnique({
-        where: { id },
-        include: {
-            unidades: {
-            include: {
-                clases: true,  // Asegúrate de incluir las clases dentro de las unidades
-            },
-            },
+  // 6. Obtener el video de una clase específica por claseId
+  async getClaseVideo(claseId: string) {
+    const clase = await this.prisma.clase.findUnique({
+        where: { id: claseId },
+        select: {
+            videoUrl: true,
+            descripcionClase: true,
         },
-        });
+    });
 
-        // Buscar la unidad por su id
-        const unidad = curso?.unidades.find(u => u.id === unidadId);
-        if (!unidad) {
-        throw new Error('Unidad no encontrada');
-        }
-
-        // Buscar la clase por su id
-        const clase = unidad.clases.find(c => c.id === claseId);
-        if (!clase) {
+    if (!clase) {
         throw new Error('Clase no encontrada');
-        }
-
-        // Retornar los materiales de la clase, si existen
-        return clase.materiales || [];
     }
 
-    // 8. Crear un curso (solo para administradores)
+    return { videoUrl: clase.videoUrl, descripcionClase: clase.descripcionClase };
+  }
+
+  // 7. Obtener los materiales adjuntos de una clase por claseId
+  async getClaseMateriales(claseId: string) {
+    const clase = await this.prisma.clase.findUnique({
+        where: { id: claseId },
+        select: {
+            materiales: true,
+        },
+    });
+
+    if (!clase) {
+        throw new Error('Clase no encontrada');
+    }
+
+    return clase.materiales || [];
+  }
+
+    
     
 }
