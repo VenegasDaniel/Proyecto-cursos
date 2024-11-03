@@ -8,19 +8,19 @@ Ruta para la vista principal
 @List_cursos = http://localhost:3000/cursos
 
 2. Mostrar el detalle de un curso específico por su ID
-@Curso_detalle = http://localhost:3000/cursos/6715dd4963ab0663a33ee54e
+@Curso_detalle = http://localhost:3000/cursos/6726e6da6d6f0576fde752a4
 
 3. Acceder a los contenidos de un curso (unidades y clases)
-@Curso_contenido = http://localhost:3000/cursos/6715dd4963ab0663a33ee54e/contenido
+@Curso_contenido = http://localhost:3000/cursos/6726e6da6d6f0576fde752a4/contenido
 
 4. Obtener los comentarios más valorados de un curso (con paginación)
-@Curso_comentarios = http://localhost:3000/cursos/6715dd4963ab0663a33ee54e/comentarios
+@Curso_comentarios = http://localhost:3000/cursos/6726e6da6d6f0576fde752a4/comentarios
 
 5. Obtener el video de una clase en específico
-@Clase_video = http://localhost:3000/clases/6715dd4963ab0663a33ee550/video
+@Clase_video = http://localhost:3000/clases/6726e6db6d6f0576fde752a6/video
 
 6.- Obtener los materiales de una clase
-@Clase_materiales = http://localhost:3000/clases/6715dd4963ab0663a33ee550/materiales
+@Clase_materiales = http://localhost:3000/clases/6726e6db6d6f0576fde752a6/materiales
 
 Crear un nuevo curso
 
