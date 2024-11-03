@@ -1,5 +1,5 @@
 Conexión a la base de datos de mongodb Atlas
-DATABASE_URL="mongodb+srv://joaquin:admin@tallerunonosql.26ila.mongodb.net/talleruno?retryWrites=true&w=majority"
+DATABASE_URL="mongodb+srv://admin:admin@tallerunonosql.hyk5p.mongodb.net/cursos?retryWrites=true&w=majority"
 
 Ruta para la vista principal
 
