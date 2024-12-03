@@ -9,6 +9,7 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src", // Especifica el directorio raíz de los archivos TypeScript
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -17,5 +18,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
-  }
+  },
+  "include": ["src/**/*"], // Incluye todos los archivos en el directorio src
+  "exclude": ["node_modules", "dist"] // Excluye node_modules y dist
 }
