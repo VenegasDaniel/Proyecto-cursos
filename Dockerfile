@@ -13,9 +13,6 @@ RUN npm install
 # Copiar todo el código fuente, incluyendo el esquema Prisma
 COPY . .
 
-# Mover el esquema Prisma al lugar esperado por Prisma CLI (opcional)
-RUN mkdir -p prisma && mv ./schema.prisma ./prisma/schema.prisma
-
 # Generar cliente Prisma
 RUN npx prisma generate
 
