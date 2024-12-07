@@ -28,25 +28,90 @@ Crear un nuevo curso
 @Crear_cursos = http://localhost:3000/cursos
 
 {
-  "nombreCurso": "Curso de Programación Básica",
-  "descripcionCurso": "Este curso cubre los fundamentos de la programación.",
-  "duracion": "4 semanas",
-  "unidades": [
-    {
-      "numeroOrden": 1,
-      "nombreUnidad": "Introducción a la programación",
-      "clases": [
-        {
-          "numeroOrden": 1,
-          "nombreClase": "Conceptos básicos",
-          "descripcionClase": "Esta clase cubre conceptos como variables y tipos de datos.",
-          "videoUrl": "https://example.com/video1",
-          "materiales": [
-            "https://example.com/material1",
-            "https://example.com/material2"
+  "nombre": "Curso de Desarrollo Web",
+  "descripcionBreve": "Aprende a crear páginas web desde cero",
+  "descripcionDetallada": "Este curso te enseñará los fundamentos del desarrollo web, incluyendo HTML, CSS y JavaScript, para que puedas crear sitios web modernos y funcionales.",
+  "imagen": "https://example.com/imagen2.jpg",
+  "valoracion": 4.8,
+  "cantidadInscritos": 200,
+  "banner": "https://example.com/banner2.jpg",
+  "unidades": {
+    "create": [
+      {
+        "nombreUnidad": "Introducción al Desarrollo Web",
+        "numeroOrden": 1,
+        "clases": {
+          "create": [
+            {
+              "nombreClase": "Clase 1: Fundamentos de HTML",
+              "numeroOrden": 1,
+              "descripcionClase": "Aprende los elementos básicos de HTML y cómo estructurar una página web.",
+              "videoUrl": "https://example.com/video3.mp4",
+              "materiales": [
+                "https://example.com/material3.pdf",
+                "https://example.com/material4.pdf"
+              ]
+            },
+            {
+              "nombreClase": "Clase 2: Introducción a CSS",
+              "numeroOrden": 2,
+              "descripcionClase": "Descubre cómo usar CSS para estilizar tus páginas web.",
+              "videoUrl": "https://example.com/video4.mp4",
+              "materiales": [
+                "https://example.com/material5.pdf",
+                "https://example.com/material6.pdf"
+              ]
+            }
           ]
         }
-      ]
-    }
-  ]
+      },
+      {
+        "nombreUnidad": "JavaScript para la Web",
+        "numeroOrden": 2,
+        "clases": {
+          "create": [
+            {
+              "nombreClase": "Clase 1: Conceptos Básicos de JavaScript",
+              "numeroOrden": 1,
+              "descripcionClase": "Aprende sobre variables, funciones y eventos en JavaScript.",
+              "videoUrl": "https://example.com/video5.mp4",
+              "materiales": [
+                "https://example.com/material7.pdf",
+                "https://example.com/material8.pdf"
+              ]
+            },
+            {
+              "nombreClase": "Clase 2: Manipulación del DOM",
+              "numeroOrden": 2,
+              "descripcionClase": "Aprende a interactuar con los elementos de tu página web usando JavaScript.",
+              "videoUrl": "https://example.com/video6.mp4",
+              "materiales": [
+                "https://example.com/material9.pdf",
+                "https://example.com/material10.pdf"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "comentarios": {
+    "create": [
+      {
+        "autor": "María López",
+        "titulo": "Excelente curso",
+        "detalle": "Este curso me ayudó a aprender a crear mi primer sitio web.",
+        "meGusta": 10,
+        "noMeGusta": 0
+      },
+      {
+        "autor": "Carlos García",
+        "titulo": "Muy completo",
+        "detalle": "Cubrió todo lo que necesitaba para empezar en el desarrollo web.",
+        "meGusta": 8,
+        "noMeGusta": 1
+      }
+    ]
+  }
 }
+

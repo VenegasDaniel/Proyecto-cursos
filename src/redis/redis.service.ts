@@ -2,6 +2,19 @@ import Redis from 'ioredis';
 
 
 export class RedisService {
+  async scanKeys(pattern: string): Promise<string[]> {
+    const keys: string[] = [];
+    let cursor = '0';
+  
+    do {
+      const [nextCursor, results] = await this.redis.scan(cursor, 'MATCH', pattern);
+      cursor = nextCursor;
+      keys.push(...results);
+    } while (cursor !== '0');
+  
+    return keys;
+  }
+  
   private redis: Redis;
 
   constructor() {

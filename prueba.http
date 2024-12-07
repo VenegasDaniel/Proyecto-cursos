@@ -1,0 +1,122 @@
+1.- Registro de usuario
+@Post http://localhost:3000/users/register
+
+{
+  "userId": "123",
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+
+mensaje esperado de respuesta 
+{
+  "message": "Usuario registrado exitosamente"
+}
+
+2.- Inicio de sesión 
+@Post http://localhost:3000/users/login
+
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+
+Mensaje de respuesta esperados
+
+{
+  "message": "Inicio de sesión exitoso",
+  "userId": "1234",
+  "email": "user@example.com"
+}
+
+{
+  "statusCode": 404,
+  "message": "Usuario no encontrado",
+  "error": "Not Found"
+}
+
+{
+  "statusCode": 401,
+  "message": "Contraseña incorrecta",
+  "error": "Unauthorized"
+}
+
+
+3.- Asigar cursos a un usuario 
+
+@Post http://localhost:3000/users/123/courses
+
+{
+  "courseIds": ["6726e6da6d6f0576fde752a4", "6753aee1cd6787d9781f8149","6753af11cd6787d9781f814d"]
+}
+
+Posibles respuestas esperadas
+
+200 OK
+
+{
+  "message": "Cursos asignados exitosamente",
+  "courses": ["course1", "course2"]
+}
+
+4.- Obtener cursos del usuario 
+
+@Get http://localhost:3000/users/1234/courses
+
+Respuesta esperada 
+
+[
+  {
+    "id": "6726e6da6d6f0576fde752a4",
+    "nombre": "Curso de Programación",
+    "descripcionBreve": "Aprende a programar desde cero",
+    "descripcionDetallada": "Este curso cubre los fundamentos de programación...",
+    "imagen": "https://example.com/imagen1.jpg",
+    "valoracion": 4.5,
+    "cantidadInscritos": 100,
+    "banner": "https://example.com/banner1.jpg"
+  },
+  {
+    "id": "6753aee1cd6787d9781f8149",
+    "nombre": "Curso de Programación Básica",
+    "descripcionBreve": "Curso de programación desde cero",
+    "descripcionDetallada": "Este curso cubre los fundamentos de programación, incluyendo variables, estructuras de control y conceptos básicos.",
+    "imagen": "https://example.com/imagen1.jpg",
+    "valoracion": 4.5,
+    "cantidadInscritos": 100,
+    "banner": "https://example.com/banner1.jpg"
+  },
+  {
+    "id": "6753af11cd6787d9781f814d",
+    "nombre": "Curso de Desarrollo Web",
+    "descripcionBreve": "Aprende a crear páginas web desde cero",
+    "descripcionDetallada": "Este curso te enseñará los fundamentos del desarrollo web, incluyendo HTML, CSS y JavaScript, para que puedas crear sitios web modernos y funcionales.",
+    "imagen": "https://example.com/imagen2.jpg",
+    "valoracion": 4.8,
+    "cantidadInscritos": 200,
+    "banner": "https://example.com/banner2.jpg"
+  }
+]
+
+Crear Progreso de un curso
+
+http://localhost:3000/progress/:userId/:courseId
+
+Ejemplo
+
+Post http://localhost:3000/progress/123/6726e6da6d6f0576fde752a4
+
+{
+  "status": "CURSANDO",
+  "percentage": 50,
+  "startDate": "2024-12-07",
+  "totalClasses": 10
+}
+
+Post http://localhost:3000/progress/123/6753aee1cd6787d9781f8149
+
+{
+  "status": "INICIADO",
+  "percentage": 0,
+  "startDate": "2024-12-07",
+  "totalClasses": 15
+}
