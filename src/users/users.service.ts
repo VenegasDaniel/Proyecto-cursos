@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RedisService } from '../redis/redis.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -38,8 +39,8 @@ export class UsersService {
 
     return { message: 'Inicio de sesión exitoso', userId: foundUser.userId, email: foundUser.email };
   }
+
   async assignCoursesToUser(userId: string, courseIds: string[]) {
-    // Validar si el usuario existe en Redis
     const userKey = `user:${userId}`;
     const user = await this.redisService.get(userKey);
   
@@ -47,33 +48,55 @@ export class UsersService {
       throw new Error(`El usuario con ID ${userId} no está registrado`);
     }
   
-    // Validar que los cursos existen en MongoDB
     const validCourses = await this.prismaService.curso.findMany({
       where: { id: { in: courseIds } },
-      select: { id: true },
+      select: {
+        id: true,
+        unidades: {
+          select: {
+            clases: true,
+          },
+        },
+      },
     });
   
     if (validCourses.length !== courseIds.length) {
       throw new Error('Uno o más cursos no existen');
     }
   
-    // Obtener los cursos actuales del usuario desde Redis
     const userCoursesKey = `user:${userId}:courses`;
     const existingCourses = await this.redisService.get(userCoursesKey);
     const courses = existingCourses ? JSON.parse(existingCourses) : [];
   
-    // Agregar nuevos cursos a la lista
-    validCourses.forEach((course) => {
+    for (const course of validCourses) {
       if (!courses.includes(course.id)) {
         courses.push(course.id);
-      }
-    });
   
-    // Guardar la lista actualizada en Redis
+        // Calcular el número total de clases considerando todas las unidades
+        const totalClasses = course.unidades.reduce(
+          (total, unidad) => total + unidad.clases.length,
+          0
+        );
+  
+        // Crear el progreso inicial
+        const progressKey = `user:${userId}:course:${course.id}`;
+        await this.redisService.set(progressKey, JSON.stringify({
+          status: 'INICIADO',
+          percentage: 0,
+          startDate: new Date().toISOString().split('T')[0],
+          totalClasses,
+          classesCompleted: 0,
+        }));
+      }
+    }
+  
     await this.redisService.set(userCoursesKey, JSON.stringify(courses));
   
-    return { message: 'Cursos asignados exitosamente', courses };
+    return { message: 'Cursos asignados y progreso inicial creado exitosamente', courses };
   }
+  
+  
+
   async getCoursesByUser(userId: string) {
     const userCoursesKey = `user:${userId}:courses`;
   

@@ -60,7 +60,7 @@ Posibles respuestas esperadas
 
 4.- Obtener cursos del usuario 
 
-@Get http://localhost:3000/users/1234/courses
+@Get http://localhost:3000/users/123/courses
 
 Respuesta esperada 
 
@@ -97,26 +97,58 @@ Respuesta esperada
   }
 ]
 
-Crear Progreso de un curso
 
-http://localhost:3000/progress/:userId/:courseId
+5.- Obtener el progreso de un curso 
 
-Ejemplo
+@Get http://localhost:3000/progress/123
 
-Post http://localhost:3000/progress/123/6726e6da6d6f0576fde752a4
+Respuesta esperada 
 
+[
+  {
+    "courseId": "6753aee1cd6787d9781f8149",
+    "progress": {
+      "status": "INICIADO",
+      "percentage": 0,
+      "startDate": "2024-12-08",
+      "totalClasses": 0,
+      "classesCompleted": 0
+    }
+  },
+  {
+    "courseId": "6753af11cd6787d9781f814d",
+    "progress": {
+      "status": "INICIADO",
+      "percentage": 0,
+      "startDate": "2024-12-08",
+      "totalClasses": 4,
+      "classesCompleted": 0
+    }
+  },
+  {
+    "courseId": "6726e6da6d6f0576fde752a4",
+    "progress": {
+      "status": "INICIADO",
+      "percentage": 0,
+      "startDate": "2024-12-08",
+      "totalClasses": 2,
+      "classesCompleted": 0
+    }
+  }
+]
+
+6.- Actualizar progreso del curso
+
+@Patch http://localhost:3000/progress/123/6726e6da6d6f0576fde752a4
+
+Respuesta esperada 
 {
-  "status": "CURSANDO",
-  "percentage": 50,
-  "startDate": "2024-12-07",
-  "totalClasses": 10
-}
-
-Post http://localhost:3000/progress/123/6753aee1cd6787d9781f8149
-
-{
-  "status": "INICIADO",
-  "percentage": 0,
-  "startDate": "2024-12-07",
-  "totalClasses": 15
+  "message": "Progreso actualizado exitosamente",
+  "progress": {
+    "status": "EN CURSO",
+    "percentage": 50,
+    "startDate": "2024-12-08",
+    "totalClasses": 2,
+    "classesCompleted": 1
+  }
 }

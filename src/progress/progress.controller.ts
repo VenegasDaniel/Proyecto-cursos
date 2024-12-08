@@ -5,15 +5,6 @@ import { ProgressService } from './progress.service';
 export class ProgressController {
   constructor(private readonly progressService: ProgressService) {}
 
-  @Post(':userId/:courseId')
-  async createProgress(
-    @Param('userId') userId: string,
-    @Param('courseId') courseId: string,
-    @Body() progress: { status: string; percentage: number; startDate: string }
-  ) {
-    return this.progressService.createProgress(userId, courseId, progress);
-  }
-
   /**
    * Actualizar el progreso de un curso específico
    */
@@ -21,9 +12,9 @@ export class ProgressController {
   async updateCourseProgress(
     @Param('userId') userId: string,
     @Param('courseId') courseId: string,
-    @Body() body: { percentage: number },
+    @Body() body: { classesCompleted: number },
   ) {
-    return this.progressService.updateCourseProgress(userId, courseId, body.percentage);
+    return this.progressService.updateProgress(userId, courseId, body.classesCompleted);
   }
 
   /**

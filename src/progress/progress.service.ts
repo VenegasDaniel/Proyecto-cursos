@@ -5,62 +5,43 @@ import { RedisService } from '../redis/redis.service';
 export class ProgressService {
   constructor(private readonly redisService: RedisService) {}
 
-  async createProgress(userId: string, courseId: string, progress: { 
-    status: string; 
-    startDate: string; 
-    percentage: number; 
-    totalClasses?: number; 
-    classesCompleted?: number; 
-  }) {
-    const courseKey = `user:${userId}:course:${courseId}`;
-  
-    // Establece un progreso inicial con valores por defecto si faltan parámetros
-    const defaultProgress = {
-      status: progress.status || 'INICIADO',
-      startDate: progress.startDate || new Date().toISOString().split('T')[0],
-      percentage: progress.percentage || 0,
-      totalClasses: progress.totalClasses || 0,
-      classesCompleted: progress.classesCompleted || 0,
-    };
-  
-    // Guardar el progreso inicial en Redis
-    await this.redisService.set(courseKey, JSON.stringify(defaultProgress));
-  
-    return { message: 'Progreso creado exitosamente', progress: defaultProgress };
-  }
-  
 
   async getProgress(userId: string, courseId: string) {
     return this.redisService.getUserCourseProgress(userId, courseId);
   }
 
 
-  async updateCourseProgress(userId: string, courseId: string, percentage: number) {
-    const courseKey = `user:${userId}:course:${courseId}`;
-    const currentDate = new Date().toISOString().split('T')[0];
+  async updateProgress(userId: string, courseId: string, classesCompleted: number) {
+    const progressKey = `user:${userId}:course:${courseId}`;
+    const progress = await this.redisService.get(progressKey);
   
-    // Obtener el progreso actual del curso
-    const existingProgress = await this.redisService.get(courseKey);
-    const progress = existingProgress ? JSON.parse(existingProgress) : {};
+    if (!progress) {
+      throw new Error('Progreso no encontrado para este curso');
+    }
   
-    // Determinar el estado basado en el porcentaje
+    const progressData = JSON.parse(progress);
+  
+    if (classesCompleted > progressData.totalClasses) {
+      throw new Error('La cantidad de clases completadas no puede exceder el total de clases');
+    }
+  
+    const percentage = (classesCompleted / progressData.totalClasses) * 100;
     let status = 'INICIADO';
+  
     if (percentage > 0 && percentage < 100) {
       status = 'EN CURSO';
     } else if (percentage === 100) {
       status = 'COMPLETADO';
     }
   
-    // Actualizar el progreso
     const updatedProgress = {
-      ...progress,
-      status,
+      ...progressData,
+      classesCompleted,
       percentage,
-      startDate: progress.startDate || currentDate, // Si no existe, asignar fecha de inicio
+      status,
     };
   
-    // Guardar el progreso actualizado en Redis
-    await this.redisService.set(courseKey, JSON.stringify(updatedProgress));
+    await this.redisService.set(progressKey, JSON.stringify(updatedProgress));
   
     return { message: 'Progreso actualizado exitosamente', progress: updatedProgress };
   }
