@@ -141,6 +141,11 @@ Respuesta esperada
 
 @Patch http://localhost:3000/progress/123/6726e6da6d6f0576fde752a4
 
+
+{
+ "classesCompleted": 1
+}
+
 Respuesta esperada 
 {
   "message": "Progreso actualizado exitosamente",
