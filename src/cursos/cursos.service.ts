@@ -1,10 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { Neo4jService } from 'src/neo4j/neo4j.service';
+
 
 @Injectable()
 export class CursosService {
-    constructor(private readonly prisma: PrismaService) {}
-
+    constructor(private readonly prisma: PrismaService,
+           private readonly neo4jService: Neo4jService,
+    ) {}
+    
+    async actualizarValoracionCurso(cursoId: string) {
+      const promedioQuery = `
+        MATCH (c:Curso {id: $cursoId})
+        RETURN c.promedioValoracion AS promedio
+      `;
+      const resultado = await this.neo4jService.runQuery(promedioQuery, { cursoId });
+    
+      if (resultado.length > 0) {
+        const promedio = resultado[0].promedio;
+        await this.prisma.curso.update({
+          where: { id: cursoId },
+          data: { valoracion: promedio },
+        });
+      }
+    }
     // 1. Mostrar todos los cursos
     async getCursos() {
         return this.prisma.curso.findMany();
@@ -73,6 +92,8 @@ export class CursosService {
             return comentariosPaginados;
     }
 
+
+
   // 6. Obtener el video de una clase específica por claseId
   async getClaseVideo(claseId: string) {
     const clase = await this.prisma.clase.findUnique({
@@ -105,7 +126,4 @@ export class CursosService {
 
     return clase.materiales || [];
   }
-
-    
-    
 }

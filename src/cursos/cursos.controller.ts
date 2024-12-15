@@ -38,6 +38,11 @@ export class CursosController {
     ) {
         return this.cursosService.getComentariosByCurso(id, page, limit);
     }
+
+    @Post('sincronizar-promedio/:cursoId')
+    async sincronizarPromedio(@Param('cursoId') cursoId: string) {
+        return this.cursosService.actualizarValoracionCurso(cursoId);
+    }
 }
 
 // Nueva ruta para acceder directamente a las clases y su contenido

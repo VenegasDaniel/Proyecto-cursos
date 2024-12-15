@@ -7,6 +7,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { ProgressModule } from './progress/progress.module';
 import { RedisModule } from './redis/redis.module';
+import { Neo4jModule } from './neo4j/neo4j.module';
+import { ComentariosModule } from './comentarios/comentario.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { RedisModule } from './redis/redis.module';
     UsersModule, 
     ProgressModule, 
     RedisModule,
+    Neo4jModule,
+    ComentariosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

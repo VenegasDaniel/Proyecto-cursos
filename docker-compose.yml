@@ -11,8 +11,13 @@ services:
       - DATABASE_URL=mongodb+srv://admin:admin@tallerunonosql.hyk5p.mongodb.net/cursos?retryWrites=true&w=majority
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - NEO4J_HOST=neo4j
+      - NEO4J_PORT=7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=password
     depends_on:
       - redis
+      - neo4j
 
   redis:
     image: redis:7
@@ -21,6 +26,15 @@ services:
       - '6379:6379'
     volumes:
       - redis_data:/data
+
+  neo4j:
+    image: neo4j:5.8
+    container_name: neo4j
+    ports:
+      - "7474:7474"  # Puerto para la interfaz web
+      - "7687:7687"  # Puerto para el driver
+    environment:
+      - NEO4J_AUTH=neo4j/password
 
 volumes:
   redis_data:

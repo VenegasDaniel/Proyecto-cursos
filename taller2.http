@@ -1,0 +1,243 @@
+@Post http://localhost:3000/comentarios
+
+Consultas 
+{
+  "usuarioId": "123",
+  "cursoId": "6726e6da6d6f0576fde752a4",
+  "titulo": "Excelente curso",
+  "detalle": "Aprendí mucho y lo recomiendo",
+  "meGusta": 5,
+  "noMeGusta": 1
+}
+
+{
+  "usuarioId": "1234",
+  "cursoId": "6726e6da6d6f0576fde752a4",
+  "titulo": "Mal Curso",
+  "detalle": "El profesor no hace clases ",
+  "meGusta": 1,
+  "noMeGusta": 5
+}
+
+respuesta 
+
+[
+  {
+    "com": {
+      "identity": {
+        "low": 2,
+        "high": 0
+      },
+      "labels": [
+        "Comentario"
+      ],
+      "properties": {
+        "fecha": {
+          "year": {
+            "low": 2024,
+            "high": 0
+          },
+          "month": {
+            "low": 12,
+            "high": 0
+          },
+          "day": {
+            "low": 15,
+            "high": 0
+          },
+          "hour": {
+            "low": 0,
+            "high": 0
+          },
+          "minute": {
+            "low": 3,
+            "high": 0
+          },
+          "second": {
+            "low": 31,
+            "high": 0
+          },
+          "nanosecond": {
+            "low": 324000000,
+            "high": 0
+          },
+          "timeZoneOffsetSeconds": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "titulo": "Excelente curso",
+        "meGusta": 5,
+        "noMeGusta": 1,
+        "id": "1dd6a568-538e-4048-b210-81a28cf4b149",
+        "detalle": "Aprendí mucho y lo recomiendo"
+      },
+      "elementId": "4:da8b1291-d576-45a7-aba0-8895b39153cf:2"
+    }
+  },
+  {
+    "com": {
+      "identity": {
+        "low": 3,
+        "high": 0
+      },
+      "labels": [
+        "Comentario"
+      ],
+      "properties": {
+        "fecha": {
+          "year": {
+            "low": 2024,
+            "high": 0
+          },
+          "month": {
+            "low": 12,
+            "high": 0
+          },
+          "day": {
+            "low": 15,
+            "high": 0
+          },
+          "hour": {
+            "low": 0,
+            "high": 0
+          },
+          "minute": {
+            "low": 6,
+            "high": 0
+          },
+          "second": {
+            "low": 26,
+            "high": 0
+          },
+          "nanosecond": {
+            "low": 466000000,
+            "high": 0
+          },
+          "timeZoneOffsetSeconds": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "titulo": "Excelente curso",
+        "meGusta": 5,
+        "noMeGusta": 1,
+        "id": "0ea8572d-78ab-44f1-b473-e3dd5bcf4b31",
+        "detalle": "Aprendí mucho y lo recomiendo"
+      },
+      "elementId": "4:da8b1291-d576-45a7-aba0-8895b39153cf:3"
+    }
+  }
+]
+
+@Get http://localhost:3000/comentarios/curso/6726e6da6d6f0576fde752a4
+
+Respuesta
+[
+  {
+    "com": {
+      "identity": {
+        "low": 3,
+        "high": 0
+      },
+      "labels": [
+        "Comentario"
+      ],
+      "properties": {
+        "fecha": {
+          "year": {
+            "low": 2024,
+            "high": 0
+          },
+          "month": {
+            "low": 12,
+            "high": 0
+          },
+          "day": {
+            "low": 15,
+            "high": 0
+          },
+          "hour": {
+            "low": 0,
+            "high": 0
+          },
+          "minute": {
+            "low": 6,
+            "high": 0
+          },
+          "second": {
+            "low": 26,
+            "high": 0
+          },
+          "nanosecond": {
+            "low": 466000000,
+            "high": 0
+          },
+          "timeZoneOffsetSeconds": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "titulo": "Excelente curso",
+        "meGusta": 5,
+        "noMeGusta": 1,
+        "id": "0ea8572d-78ab-44f1-b473-e3dd5bcf4b31",
+        "detalle": "Aprendí mucho y lo recomiendo"
+      },
+      "elementId": "4:da8b1291-d576-45a7-aba0-8895b39153cf:3"
+    }
+  },
+  {
+    "com": {
+      "identity": {
+        "low": 5,
+        "high": 0
+      },
+      "labels": [
+        "Comentario"
+      ],
+      "properties": {
+        "fecha": {
+          "year": {
+            "low": 2024,
+            "high": 0
+          },
+          "month": {
+            "low": 12,
+            "high": 0
+          },
+          "day": {
+            "low": 15,
+            "high": 0
+          },
+          "hour": {
+            "low": 0,
+            "high": 0
+          },
+          "minute": {
+            "low": 8,
+            "high": 0
+          },
+          "second": {
+            "low": 42,
+            "high": 0
+          },
+          "nanosecond": {
+            "low": 699000000,
+            "high": 0
+          },
+          "timeZoneOffsetSeconds": {
+            "low": 0,
+            "high": 0
+          }
+        },
+        "titulo": "Mal Curso",
+        "meGusta": 1,
+        "noMeGusta": 5,
+        "id": "280be73c-bc83-4e22-beac-8d5e60a8622c",
+        "detalle": "El profesor no hace clases "
+      },
+      "elementId": "4:da8b1291-d576-45a7-aba0-8895b39153cf:5"
+    }
+  }
+]
